@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POTENCIA LIMPIA | Grid 2026</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;900&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg: #050505; --card: #111; --blue: #00d4ff; --orange: #ff8c00;
+            --white: #ffffff; --gray: #888;
+        }
+
+        body { font-family: 'Montserrat', sans-serif; margin: 0; background-color: var(--bg); color: var(--white); overflow-x: hidden; line-height: 1.6; }
+
+        header {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?q=80&w=1600&auto=format&fit=crop');
+            background-size: cover; background-position: center; border-bottom: 4px solid var(--blue);
+            padding: 120px 20px; text-align: center;
+        }
+
+        header h1 { font-family: 'Orbitron'; font-size: 4rem; margin: 0; color: var(--blue); text-shadow: 0 0 20px var(--blue); letter-spacing: 5px; }
+        header p { font-family: 'Orbitron'; color: var(--orange); font-weight: bold; margin-top: 10px; }
+
+        .live-ticker { background: #000; color: var(--blue); padding: 12px 0; border-bottom: 1px solid #333; font-family: 'Orbitron'; font-size: 0.8rem; overflow: hidden; }
+        .ticker-wrap { display: inline-block; white-space: nowrap; animation: ticker 30s linear infinite; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
+
+        .container { max-width: 1200px; margin: 50px auto; padding: 0 20px; }
+
+        /* GRID DE MÓDULOS */
+        .grid-tech { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .tech-card {
+            background: var(--card); border: 1px solid #222; border-radius: 20px; padding: 30px;
+            transition: 0.4s; cursor: pointer; position: relative; overflow: hidden;
+        }
+        .tech-card:hover { border-color: var(--blue); transform: translateY(-10px); box-shadow: 0 0 30px rgba(0, 212, 255, 0.2); }
+        .tech-card h3 { font-family: 'Orbitron'; color: var(--orange); margin-top: 0; }
+        .tech-card p { color: var(--gray); font-size: 0.9rem; }
+
+        /* VÍDEOS TERMINAL */
+        .terminal-videos {
+            background: #000; border: 2px solid var(--orange); border-radius: 40px;
+            padding: 40px; margin: 80px 0; box-shadow: 0 0 50px rgba(255, 140, 0, 0.15);
+        }
+        .terminal-videos h2 { font-family: 'Orbitron'; text-align: center; color: var(--orange); margin-bottom: 40px; }
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+        .v-box { background: #0a0a0a; border-radius: 20px; overflow: hidden; border: 1px solid #222; padding-bottom: 20px; text-align: center; }
+        iframe { width: 100%; height: 200px; border: none; }
+        .btn-link {
+            display: inline-block; margin-top: 15px; padding: 10px 25px;
+            border: 2px solid var(--blue); color: var(--blue); text-decoration: none;
+            font-family: 'Orbitron'; border-radius: 5px; font-size: 0.8rem; transition: 0.3s;
+        }
+        .btn-link:hover { background: var(--blue); color: #000; box-shadow: 0 0 15px var(--blue); }
+
+        /* PANEL LATERAL: DESMINTIENDO MITOS */
+        .side-trigger {
+            position: fixed; right: 0; top: 50%; transform: translateY(-50%);
+            background: var(--orange); color: #000; padding: 25px 12px;
+            cursor: pointer; border-radius: 20px 0 0 20px; font-weight: 900;
+            writing-mode: vertical-rl; z-index: 9000; font-family: 'Orbitron';
+        }
+        #sidePanel {
+            position: fixed; right: -100%; top: 0; width: 400px; height: 100%;
+            background: #080808; border-left: 3px solid var(--orange);
+            z-index: 9999; transition: 0.6s; padding: 50px; overflow-y: auto;
+        }
+        #sidePanel.active { right: 0; }
+        .mito-box { border-bottom: 1px solid #222; margin-bottom: 25px; padding-bottom: 15px; }
+        .mito-box h4 { color: var(--orange); font-family: 'Orbitron'; margin-bottom: 5px; }
+
+        /* MODALES */
+        .modal { display: none; position: fixed; z-index: 10000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); }
+        .modal-content { background: #111; margin: 5% auto; padding: 50px; width: 85%; max-width: 800px; border-radius: 30px; border: 1px solid var(--blue); position: relative; }
+        .close { position: absolute; right: 30px; top: 20px; font-size: 40px; cursor: pointer; color: var(--blue); }
+
+        footer { text-align: center; padding: 60px; border-top: 1px solid #222; color: var(--gray); font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <div class="side-trigger" onclick="toggleSide()">⚡ DESMINTIENDO MITOS ➔</div>
+
+    <div id="sidePanel">
+        <h2 style="font-family:'Orbitron'; color:var(--orange);">INTELIGENCIA ENERGÉTICA</h2>
+        <div class="mito-box">
+            <h4>MITO: El viento no es constante</h4>
+            <p>REALIDAD: La eólica offshore captura vientos permanentes en alta mar y las baterías estabilizan el flujo 24/7.</p>
+        </div>
+        <div class="mito-box">
+            <h4>MITO: El reciclaje de paneles</h4>
+            <p>REALIDAD: Ya existen plantas que recuperan el 95% de la plata y silicio de paneles antiguos para fabricar nuevos.</p>
+        </div>
+        <button onclick="toggleSide()" style="background:var(--orange); border:none; padding:10px 20px; cursor:pointer; font-family:'Orbitron'; font-weight:bold;">CERRAR PANEL</button>
+    </div>
+
+    <header>
+        <h1>POTENCIA LIMPIA</h1>
+        <p>REGENERACIÓN ELÉCTRICA GLOBAL ::: 2026</p>
+    </header>
+
+    <div class="live-ticker">
+        <div class="ticker-wrap">
+            ::: RED GLOBAL: 74% RENOVABLE ::: FUSIÓN NUCLEAR: REACTOR ITER AL 92% ::: HIDRÓGENO VERDE: EXPORTACIÓN ACTIVA DESDE CHILE ::: SOLAR ORBITAL: TEST SATÉLITE X-1 EXITOSO :::
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="grid-tech">
+            <div class="tech-card" onclick="openModal('modFusion')">
+                <h3>FUSIÓN NUCLEAR</h3>
+                <p>El poder de las estrellas en la Tierra. Energía infinita y segura sin residuos radiactivos de larga duración.</p>
+            </div>
+            <div class="tech-card" onclick="openModal('modOffshore')">
+                <h3>EÓLICA OFFSHORE</h3>
+                <p>Gigantes sobre el océano capturando la energía de los vientos más potentes del planeta.</p>
+            </div>
+            <div class="tech-card" onclick="openModal('modHidrogeno')">
+                <h3>HIDRÓGENO VERDE</h3>
+                <p>El combustible del futuro para aviones y barcos. Cero emisiones, solo vapor de agua.</p>
+            </div>
+            <div class="tech-card" onclick="openModal('modOrbital')">
+                <h3>SOLAR ORBITAL</h3>
+                <p>Paneles en el espacio enviando energía a la Tierra mediante microondas. Energía solar 24 horas al día.</p>
+            </div>
+        </div>
+
+        <section class="terminal-videos">
+            <h2>📡 TRANSMISIÓN DE DATOS (VÍDEOS)</h2>
+            <div class="video-grid">
+                <div class="v-box">
+                    <iframe src="https://www.youtube.com/embed/gU9Gsh-vT24" loading="lazy"></iframe>
+                    <a href="https://www.youtube.com/watch?v=gU9Gsh-vT24" target="_blank" class="btn-link">ACCESO TOTAL ➔</a>
+                </div>
+                <div class="v-box">
+                    <iframe src="https://www.youtube.com/embed/p1X6V_V_h_o" loading="lazy"></iframe>
+                    <a href="https://www.youtube.com/watch?v=p1X6V_V_h_o" target="_blank" class="btn-link">ACCESO TOTAL ➔</a>
+                </div>
+                <div class="v-box">
+                    <iframe src="https://www.youtube.com/embed/0Puv0Pss33M" loading="lazy"></iframe>
+                    <a href="https://www.youtube.com/watch?v=0Puv0Pss33M" target="_blank" class="btn-link">ACCESO TOTAL ➔</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="modFusion" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('modFusion')">&times;</span><h2>Fusión Nuclear</h2><p>A diferencia de la fisión actual, la fusión no puede generar fusiones nucleares descontroladas. Utiliza isótopos del hidrógeno presentes en el agua de mar como combustible principal, generando energía masiva con un impacto ambiental mínimo.</p></div></div>
+    <div id="modHidrogeno" class="modal"><div class="modal-content"><span class="close" onclick="closeModal('modHidrogeno')">&times;</span><h2>Hidrógeno Verde</h2><p>Se produce mediante electrólisis del agua utilizando excedentes de energía solar y eólica. Es el vector energético clave para descarbonizar industrias que no pueden funcionar solo con electricidad de baterías.</p></div></div>
+
+    <footer>
+        <p>PLATAFORMA POTENCIA LIMPIA | DESARROLLO EXPERIMENTAL 2026</p>
+    </footer>
+
+    <script>
+        function openModal(id) { document.getElementById(id).style.display = "block"; document.body.style.overflow = "hidden"; }
+        function closeModal(id) { document.getElementById(id).style.display = "none"; document.body.style.overflow = "auto"; }
+        function toggleSide() { document.getElementById('sidePanel').classList.toggle('active'); }
+        window.onclick = function(event) { if (event.target.className === 'modal') { closeModal(event.target.id); } }
+    </script>
+</body>
+</html>
